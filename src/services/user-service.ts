@@ -1,5 +1,5 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
-import { RegisterDTO } from "src/models/user";
+import UserProfile, { RegisterDTO } from "src/models/user";
 
 export default class UserService {
     private userTable: string = process.env.USER_TABLE;
@@ -22,5 +22,16 @@ export default class UserService {
         }).promise();
 
         return response;
+    }
+
+    async getUser(email: string) {
+        const response = await this.docClient.get({
+            TableName: this.userTable,
+            Key: {
+                email
+            }
+        }).promise();
+
+        return response.Item as UserProfile ?? null;
     }
 }

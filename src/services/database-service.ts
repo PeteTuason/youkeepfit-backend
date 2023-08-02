@@ -19,9 +19,9 @@ export default class DatabaseService {
     }
 
     async login(email: string, password: string) {
-        const response = await this.authService.login(email, password);
-        if (response) {
-            return response;
+        const isValid = await this.authService.login(email, password);
+        if (isValid) {
+            return await this.userService.getUser(email);
         } else {
             return null;
         }

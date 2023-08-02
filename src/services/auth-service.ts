@@ -37,11 +37,7 @@ export default class AuthService {
         const user = await this.isExist(email);
 
         if (user) {
-            if (checkPassword(password, user.password)) {
-                return user;
-            } else {
-                return null;
-            }
+            return checkPassword(password, user.password)
         } else {
             return null;
         }
