@@ -37,9 +37,13 @@ export default class AuthService {
         const user = await this.isExist(email);
 
         if (user) {
-            return await checkPassword(password, user.password);
+            if (checkPassword(password, user.password)) {
+                return user;
+            } else {
+                return null;
+            }
         } else {
-            return false;
+            return null;
         }
     }
 }

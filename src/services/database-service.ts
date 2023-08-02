@@ -21,7 +21,7 @@ export default class DatabaseService {
     async login(email: string, password: string) {
         const response = await this.authService.login(email, password);
         if (response) {
-            //return token
+            return response;
         } else {
             return null;
         }
