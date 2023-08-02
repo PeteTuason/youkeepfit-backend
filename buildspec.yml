@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - echo Installing NPM dependencies and Serverless
+      - npm install
+      - npm install serverless
+  build:
+    commands:
+      - echo Build and Deploy
+      - npx serverless config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY
+      - npx serverless deploy --stage $env
