@@ -1,4 +1,4 @@
-import { RegisterDTO } from "src/models/user";
+import { BasicProfileDTO, FitnessProfileDTO, RegisterDTO } from "src/models/user";
 import AuthService from "./auth-service";
 import UserService from "./user-service";
 
@@ -16,6 +16,14 @@ export default class DatabaseService {
     async register(user: RegisterDTO) {
         await this.authService.register(user.email, user.password);
         await this.userService.register(user);
+    }
+
+    async basicProfile(profile: BasicProfileDTO) {
+        await this.userService.basicProfile(profile);
+    }
+
+    async fitnessProfile(profile: FitnessProfileDTO) {
+        await this.userService.fitnessProfile(profile);
     }
 
     async login(email: string, password: string) {
