@@ -32,6 +32,6 @@ export default class UserService {
             }
         }).promise();
 
-        return response.Item as UserProfile ?? null;
+        return response.Item ?? null;
     }
 }
