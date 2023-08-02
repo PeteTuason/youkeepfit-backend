@@ -31,8 +31,8 @@ const login: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) =
       error: 'signin failed'
     }, 400);
   } else {
-    delete user?.issuer;
     const token = await generateToken(user);
+    delete user.issuer;
     return formatJSONResponse({
       status: "success",
       data: {
