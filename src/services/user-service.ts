@@ -25,9 +25,55 @@ export default class UserService {
     }
 
     async basicProfile(profile: BasicProfileDTO) {
+        const params = {
+            TableName: this.userTable,
+            Key: {
+                email: profile.email
+            },
+            UpdateExpression: "SET #age = :age, #gender = :gender, #height = :height, #weight = :weight, #goalWeight = :goalWeight, #bmi = :bmi, #goal = :goal",
+            ExpressionAttributeNames: {
+                "#age": "age",
+                "#gender": "gender",
+                "#height": "height",
+                "#weight": "weight",
+                "#goalWeight": "goalWeight",
+                "#bmi": "bmi",
+                "#goal": "goal"
+            },
+            ExpressionAttributeValues: {
+                ":age": profile.age,
+                ":gender": profile.gender,
+                ":height": profile.height,
+                ":weight": profile.weight,
+                ":goalWeight": profile.goalWeight,
+                ":bmi": profile.bmi,
+                ":goal": profile.goal,
+            },
+        };
+
+        await this.docClient.update(params).promise();
     }
 
     async fitnessProfile(profile: FitnessProfileDTO) {
+        const params = {
+            TableName: this.userTable,
+            Key: {
+                email: profile.email
+            },
+            UpdateExpression: "SET #bodyType = :bodyType, #activityLevel = :activityLevel, #healthQuestions = :healthQuestions",
+            ExpressionAttributeNames: {
+                "#bodyType": "bodyType",
+                "#activityLevel": "activityLevel",
+                "#healthQuestions": "healthQuestions"
+            },
+            ExpressionAttributeValues: {
+                ":bodyType": profile.bodyType,
+                ":activityLevel": profile.activityLevel,
+                ":healthQuestions": profile.healthQuestions
+            },
+        };
+
+        await this.docClient.update(params).promise();
     }
 
     async getUser(email: string) {
