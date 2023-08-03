@@ -24,13 +24,13 @@ const login: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) =
   }
 
   const user = await DatabaseService.login(email, password);
-
   if (!user) {
     return formatJSONResponse({
       status: 'failed',
       error: 'signin failed'
     }, 400);
   } else {
+    console.log("user", user);
     const token = await generateToken(user);
     return formatJSONResponse({
       status: "success",

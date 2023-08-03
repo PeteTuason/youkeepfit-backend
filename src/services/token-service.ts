@@ -8,7 +8,7 @@ export const generateToken = async (user: UserProfile) => {
     const applicationdID = Buffer.from(`${secret}`).toString('base64');
 
     const token: any = user;
-    token.issuer = applicationdID;
+    token["issuer"] = applicationdID;
     return await sign(user, bufferedSecret, { expiresIn: 86400 });
 }
 
