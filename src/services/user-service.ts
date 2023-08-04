@@ -1,5 +1,5 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
-import UserProfile, { BasicProfileDTO, FitnessProfileDTO, RegisterDTO } from "src/models/user";
+import UserProfile, { BasicProfileDTO, DietPreferenceDTO, FitnessProfileDTO, RegisterDTO, WorkoutPreferenceDTO } from "src/models/user";
 
 export default class UserService {
     private userTable: string = process.env.USER_TABLE;
@@ -70,6 +70,52 @@ export default class UserService {
                 ":bodyType": profile.bodyType,
                 ":activityLevel": profile.activityLevel,
                 ":healthQuestions": profile.healthQuestions
+            },
+        };
+
+        await this.docClient.update(params).promise();
+    }
+
+    async dietPreference(preference: DietPreferenceDTO) {
+        const params = {
+            TableName: this.userTable,
+            Key: {
+                email: preference.email
+            },
+            UpdateExpression: "SET #dietType = :dietType, #numberOfMeals = :numberOfMeals, #healthQuestionList = :healthQuestionList",
+            ExpressionAttributeNames: {
+                "#dietType": "dietType",
+                "#numberOfMeals": "numberOfMeals",
+                "#healthQuestionList": "healthQuestionList"
+            },
+            ExpressionAttributeValues: {
+                ":dietType": preference.dietType,
+                ":numberOfMeals": preference.numberOfMeals,
+                ":healthQuestionList": preference.healthQuestionList
+            },
+        };
+
+        await this.docClient.update(params).promise();
+    }
+
+    async workoutPreference(preference: WorkoutPreferenceDTO) {
+        const params = {
+            TableName: this.userTable,
+            Key: {
+                email: preference.email
+            },
+            UpdateExpression: "SET #gymEquipments = :gymEquipments, #workoutExperience = :workoutExperience, #workoutTime = :workoutTime, #workoutDays = :workoutDays",
+            ExpressionAttributeNames: {
+                "#gymEquipments": "gymEquipments",
+                "#workoutExperience": "workoutExperience",
+                "#workoutTime": "workoutTime",
+                "#workoutDays": "workoutDays"
+            },
+            ExpressionAttributeValues: {
+                ":gymEquipments": preference.gymEquipments,
+                ":workoutExperience": preference.workoutExperience,
+                ":workoutTime": preference.workoutTime,
+                ":workoutDays": preference.workoutDays
             },
         };
 
