@@ -1,4 +1,4 @@
-import { BasicProfileDTO, DietPreferenceDTO, FitnessProfileDTO, RegisterDTO } from "src/models/user";
+import { BasicProfileDTO, DietPreferenceDTO, FitnessProfileDTO, RegisterDTO, WorkoutPreferenceDTO } from "src/models/user";
 import AuthService from "./auth-service";
 import UserService from "./user-service";
 
@@ -28,6 +28,10 @@ export default class DatabaseService {
 
     async dietPreference(preference: DietPreferenceDTO) {
         await this.userService.dietPreference(preference);
+    }
+
+    async workoutPreference(preference: WorkoutPreferenceDTO) {
+        await this.userService.workoutPreference(preference);
     }
 
     async login(email: string, password: string) {
